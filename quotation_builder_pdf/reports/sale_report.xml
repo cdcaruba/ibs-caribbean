@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_saleorder_document_quotation_builder" inherit_id="sale.report_saleorder_document" priority='99'>
+        <xpath expr="//div[hasclass('page')]" position="before">
+            <div class="row">
+                <div id="template_introduction" t-raw="doc.website_description"/>
+                <t t-foreach="doc.order_line" t-as="line">
+                    <div t-raw="line.website_description"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>
