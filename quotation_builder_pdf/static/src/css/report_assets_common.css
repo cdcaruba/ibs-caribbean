@@ -1,0 +1,7 @@
+.custom_template h1,
+.custom_template h2,
+.custom_template h3,
+.custom_template h4 {
+    page-break-before: always;
+
+}

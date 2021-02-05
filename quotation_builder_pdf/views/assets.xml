@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="bluepack_assets_common" name="bluepack assets common" inherit_id="web.report_assets_common">
-        <xpath expr="." position="inside">
+        <!--<xpath expr="." position="inside">
+             <t t-call-assets="web.assets_frontend"/>
+
             <t t-call-assets="web.assets_common"/>
+            <t t-call-assets="web.assets_common_lazy"/>
+            <t t-call-assets="web.assets_frontend_lazy"/>
+            <t t-call-assets="web_editor.assets_wysiwyg"/>
+            <t t-call-assets="website.assets_editor"/>
+            <t t-call-assets="web.assets_common_minimal_js"/>
+            <t t-call-assets="web.assets_frontend_minimal_js"/>
+            <t t-call-assets="web_editor.summernote"/>
+            <t t-call-assets="website.assets_wysiwyg"/>
+
+        </xpath> -->
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/css" href="/quotation_builder_pdf/static/src/css/report_assets_common.css"/>
         </xpath>
     </template>
+    <!-- <t t-call-assets="web_enterprise.webclient_bootstrap" t-js="0"/> -->
+
+    <!-- <t t-call-assets="website.assets_backend"/> -->
+    <!-- <t t-call-assets="website.layout"/> -->
+
+    <!-- <template id="cleaning_tool_management.webclient_bootstrap" inherit_id="web_enterprise.webclient_bootstrap">
+        <xpath expr="//link[@href='/web_enterprise/static/src/img/mobile-icons/android-192x192.png']"
+               position="replace">
+        </xpath>
+    </template> -->
+
 </odoo>
