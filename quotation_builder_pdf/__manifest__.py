@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': "quotation_builder_pdf",
+    'name': "Quotation Builder PDF",
 
     'summary': """
         Quotation Builder PDF""",
@@ -15,7 +15,7 @@
     'website': "http://www.odoo.com",
     'category': 'Sales',
     'version': '0.1',
-    'depends': ['sale_quotation_builder'],
+    'depends': ['sale_quotation_builder', 'website', 'web_enterprise'],
     'data': [
         'views/assets.xml',
         'reports/sale_report.xml',
