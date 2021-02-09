@@ -8,8 +8,9 @@
 
     'description': """
         Enables the printed PDF of the quotation to display the same modifications
-        as the portal view. Every customization done with Odoo's Quotation Builder
-        will be displayed on the PDF.
+        as the portal view. Text and image customizations done with Odoo's Quotation
+        Builder will be displayed on the PDF. The animated and complex widgets
+        designed for the webiste will not be displaid on the report.
     """,
     'author': "Odoo Inc",
     'website': "http://www.odoo.com",
