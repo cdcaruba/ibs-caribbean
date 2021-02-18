@@ -1,6 +1,6 @@
 .custom_template img {
     display:block !important;
-    width:100% !important;
-    height:auto !important;
+    /* width:100% !important; */
+    /* height:auto !important; */
     page-break-after: always;
 }
