@@ -5,6 +5,4 @@
             <link rel="stylesheet" type="text/css" href="/quotation_builder_pdf/static/src/css/report_assets_common.css"/>
         </xpath>
     </template>
-
-
 </odoo>

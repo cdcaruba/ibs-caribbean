@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
+    <!-- Customize the JS of this report to show footer only on last page -->
+    <template id="minimal_layout_ibs" inherit_id="web.minimal_layout">
+      <xpath expr="//t[@t-if='subst_needed']" position="replace">
+        <script src='/quotation_builder_pdf/static/src/js/subst.js'></script>
+      </xpath>
+    </template>
+
+
     <template id="report_saleorder_document_quotation_builder" inherit_id="sale.report_saleorder_document" priority='99'>
+        <!-- Adding custom quotation blocks (mail goal of task)-->
         <xpath expr="//table[hasclass('o_main_table')]" position="before">
             <div class="row">
                 <div class="col-auto custom_template">
@@ -11,5 +21,94 @@
                 </div>
             </div>
         </xpath>
+
+        <!-- Put addresses inside the report_saleorder_document page so the layout fits better with the paper format -->
+        <xpath expr="//t[@t-set='address']/../t[3]" position="replace"/>
+        <xpath expr="//t[@t-set='address']" position="replace"/>
+        <xpath expr="//h2[hasclass('mt16')]" position="before">
+            <t t-if="doc.partner_shipping_id == doc.partner_invoice_id
+                                 and doc.partner_invoice_id != doc.partner_id
+                                 or doc.partner_shipping_id != doc.partner_invoice_id">
+                <t t-set="information_block">
+                    <strong t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and Shipping Address:</strong>
+                    <strong t-if="doc.partner_shipping_id != doc.partner_invoice_id">Invoicing Address:</strong>
+                    <div t-field="doc.partner_invoice_id"
+                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                    <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                        <strong>Shipping Address:</strong>
+                        <div t-field="doc.partner_shipping_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                    </t>
+                </t>
+            </t>
+            <div t-attf-class="o_company_#{doc.company_id.id}_layout" t-att-style="report_header_style">
+                <div class="row">
+                    <div class="col-3 mb4">
+                        <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                    </div>
+                    <div class="col-9 text-right" style="margin-top:22px;" t-field="doc.company_id.report_header" name="moto"/>
+                </div>
+                <div t-if="doc.company_id.logo or doc.company_id.report_header" class="row zero_min_height" style="margin-bottom:16px;">
+                    <div class="col-12">
+                        <div style="border-bottom: 1px solid black;margin-bottom:22px;"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6" name="company_address">
+                        <div t-field="doc.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}"/>
+                    </div>
+                    <div class="col-3">
+                        <div t-field="doc.partner_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                        <p t-if="doc.partner_id.vat"><t t-esc="doc.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="doc.partner_id.vat"/></p>
+                    </div>
+                    <t t-if="doc.partner_shipping_id == doc.partner_invoice_id
+                     and doc.partner_invoice_id != doc.partner_id
+                     or doc.partner_shipping_id != doc.partner_invoice_id">
+                        <div class="col-3">
+                            <strong t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and Shipping Address:</strong>
+                            <strong t-if="doc.partner_shipping_id != doc.partner_invoice_id">Invoicing Address:</strong>
+                            <div t-field="doc.partner_invoice_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                            <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                                <strong>Shipping Address:</strong>
+                                <div t-field="doc.partner_shipping_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- This is the same as external_layout_standard but without the header.
+    We include the header in report_saleorder_document page directly to make it
+    appear only once and preventing it from taking up space on all the pages -->
+    <template id="external_layout_ibs">
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <!-- using the list-inline-item class from bootstrap causes weird behaviours in pdf report
+                         adding d-inline class fixes the problem-->
+                    <li t-if="company.phone" class="list-inline-item d-inline">Phone: <span class="o_force_ltr" t-field="company.phone"/></li>
+                    <li t-if="company.email" class="list-inline-item d-inline">Email: <span t-field="company.email"/></li>
+                    <li t-if="company.website" class="list-inline-item d-inline">Web: <span t-field="company.website"/></li>
+                    <li t-if="company.vat" class="list-inline-item d-inline"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
+                </ul>
+
+                <div name="financial_infos">
+                    <span t-field="company.report_footer"/>
+                </div>
+
+                <div t-if="report_type == 'pdf'" class="text-muted">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
     </template>
 </odoo>
