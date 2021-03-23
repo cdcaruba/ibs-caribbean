@@ -16,9 +16,9 @@ function subst() {
         'footer': function (elt) {
             elt.style.visibility = (vars.page === vars.topage) ? "visible" : "hidden";
         },
-        // 'header': function (elt) {
-        //     elt.style.display = (vars.page === '1') ? "inline" : "none";
-        // },
+        'header': function (elt) {
+            elt.style.display = "none";
+        },
     };
 
     for (var klass in operations) {

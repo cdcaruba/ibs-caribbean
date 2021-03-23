@@ -4,7 +4,7 @@
 from odoo import fields, models, api
 from bs4 import BeautifulSoup
 
-TEXT_ATTRIBUTES = ['Title', 'Text block']
+TEXT_ATTRIBUTES = ['Title', 'Text block', 'Separator']
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -19,7 +19,13 @@ class SaleOrder(models.Model):
                 soup = BeautifulSoup(text, 'lxml')
                 for widget in soup.find_all('section'):
                     if widget.get('data-name') and widget['data-name'] not in TEXT_ATTRIBUTES:
-                         widget.decompose()
+                        widget.decompose()
+                for div in soup.find_all('div', title="Pagebreak"):
+                    div.decompose()
+                for sep in soup.find_all('div'):
+                    if sep.get('data-name') and sep['data-name'] == 'Separator':
+                        sep.clear()
+                        sep['style'] = "page-break-after: always;"
                 record['x_txt_website_description'] = soup.prettify()
             else:
                 record['x_txt_website_description'] = ''
@@ -38,7 +44,13 @@ class SaleOrderLine(models.Model):
                 soup = BeautifulSoup(text, 'lxml')
                 for widget in soup.find_all('section'):
                     if widget.get('data-name') and widget['data-name'] not in TEXT_ATTRIBUTES:
-                             widget.decompose()
+                        widget.decompose()
+                for div in soup.find_all('div', title="Pagebreak"):
+                    div.decompose()
+                for sep in soup.find_all('div'):
+                    if sep.get('data-name') and sep['data-name'] == 'Separator':
+                        sep.clear()
+                        sep['style'] = "page-break-after: always;"
                 record['x_txt_website_description'] = soup.prettify()
             else:
                 record['x_txt_website_description'] = ''
