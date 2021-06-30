@@ -53,7 +53,7 @@
             </div>
         </xpath>
 
-        <!-- Adding custom quotation blocks (mail goal of task)-->
+        <!-- Adding custom quotation blocks (mail goal of task) and add "Pricing" title-->
         <xpath expr="//table[hasclass('o_main_table')]" position="before">
             <div class="row" style="page-break-after: always;">
                 <div class="col-auto custom_template">
@@ -63,6 +63,10 @@
                     </t>
                 </div>
             </div>
+            <h2 class="mt16">
+                <span>Pricing</span>
+            </h2>
         </xpath>
+
     </template>
 </odoo>
