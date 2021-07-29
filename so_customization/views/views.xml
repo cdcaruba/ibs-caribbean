@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+  <!-- Inherit Form View to Modify it -->
+  <record id="sale_inherit_crm" model="ir.ui.view">
+      <field name="name">Sale Quotation</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+
+          <xpath expr="//field[@name='sale_order_template_id']" position="after">
+            <field name="contact_person"/>
+            <field name="email"/>
+            <field name="telephone"/>
+            <field name="recurring_period"/>
+            <field name="term_and_condition"/>
+            <field name="start_date"/>
+          </xpath>
+
+           <xpath expr="//field[@name='payment_term_id']" position="after">
+            <field name="company"/>
+            <field name="billing_contact"/>
+            <field name="billing_email"/>
+            <field name="billing_telephone"/>
+            <field name="end_date"/>
+            <field name="contract"/>
+          </xpath>
+
+      </field>
+  </record>
+  </data>
+</odoo>

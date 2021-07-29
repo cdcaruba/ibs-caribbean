@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="inherit_invoice_crm" model="ir.ui.view">
+            <field name="name">Account Invoice Field</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="contact_person"/>
+                    <field name="email"/>
+                    <field name="telephone"/>
+                    <field name="recurring_period"/>
+                    <field name="term_and_condition"/>
+                    <field name="start_date"/>
+                </xpath>
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <!--            <field name="company"/>-->
+                    <field name="billing_contact"/>
+                    <field name="billing_email"/>
+                    <field name="billing_telephone"/>
+                    <field name="end_date"/>
+                    <field name="contract"/>
+                </xpath>
+
+            </field>
+        </record>
+        <template id="inherit_sale_template_new" inherit_id="sale.sale_order_portal_content">
+            <xpath expr="//section[@id='details']//h3[@id='details']" position="replace">
+                <h3>Advertising Agreement</h3>
+            </xpath>
+
+        </template>
+
+        <template id="inherit_sale_template_proposal" inherit_id="sale.sale_order_portal_template">
+            <xpath expr="//main[@id='sign-dialog']/p" position="replace">
+                <p>
+                    <span>By signing this proposal, I have read and accept the terms:</span>
+                    <ul>
+                        <li>
+                            <span>Accepted on the behalf of:</span>
+                            <b t-field="sale_order.partner_id.commercial_partner_id"/>
+                        </li>
+                        <li>
+                            <span>For an amount of:</span>
+                            <b data-id="total_amount" t-field="sale_order.amount_total"/>
+                        </li>
+                        <li t-if="sale_order.payment_term_id">
+                            <span>With payment terms:</span>
+                            <b t-field="sale_order.payment_term_id.note"/>
+                        </li>
+                    </ul>
+                </p>
+            </xpath>
+
+        </template>
+
+    </data>
+</odoo>
