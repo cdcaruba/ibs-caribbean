@@ -93,7 +93,7 @@
                         </li>
                         <li>
                             <span>For the amount of:</span>
-                            <b data-id="total_amount" t-field="sale_order.amount_total"/> per month
+                            <b data-id="total_amount" t-field="sale_order.amount_total"/> Per Month
                         </li>
 <!--                        <li t-if="sale_order.payment_term_id">-->
 <!--                            <span>With payment terms:</span>-->
@@ -101,7 +101,7 @@
 <!--                        </li>-->
                         <li>
                             <span>Starting on:</span>
-                            <b t-field="sale_order.start_date"/> and
+                            <b t-field="sale_order.start_date"/> And
                         </li>
                         <li>
                             <span>Ending on:</span>
