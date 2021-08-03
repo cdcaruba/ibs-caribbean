@@ -79,30 +79,32 @@
         <template id="inherit_sale_template_proposal" inherit_id="sale.sale_order_portal_template">
             <xpath expr="//main[@id='sign-dialog']/p" position="replace">
                 <p>
-                    <span>By signing this proposal, I have read and accept the terms:</span>
+                    <span>
+                        By signing this agreement, I have read and accept the terms and conditions
+                    </span>
                     <ul>
+<!--                        <li>-->
+<!--                            <span>on behalf of:</span>-->
+<!--                            <b t-field="sale_order.partner_id.commercial_partner_id"/>-->
+<!--                        </li>-->
                         <li>
-                            <span>Accepted on the behalf of:</span>
-                            <b t-field="sale_order.partner_id.commercial_partner_id"/>
-                        </li>
-                        <li>
-                            <span>Accepted on the behalf of:</span>
+                            <span>On the behalf:</span>
                             <b t-field="sale_order.company_id"/>
                         </li>
                         <li>
-                            <span>For an amount of:</span>
-                            <b data-id="total_amount" t-field="sale_order.amount_total"/>
+                            <span>For the amount of:</span>
+                            <b data-id="total_amount" t-field="sale_order.amount_total"/> per month
                         </li>
-                        <li t-if="sale_order.payment_term_id">
-                            <span>With payment terms:</span>
-                            <b t-field="sale_order.payment_term_id.note"/>
+<!--                        <li t-if="sale_order.payment_term_id">-->
+<!--                            <span>With payment terms:</span>-->
+<!--                            <b t-field="sale_order.payment_term_id.note"/>-->
+<!--                        </li>-->
+                        <li>
+                            <span>Starting on:</span>
+                            <b t-field="sale_order.start_date"/> and
                         </li>
                         <li>
-                            <span>Start Date:</span>
-                            <b t-field="sale_order.start_date"/>
-                        </li>
-                        <li>
-                            <span>End Date:</span>
+                            <span>Ending on:</span>
                             <b t-field="sale_order.end_date"/>
                         </li>
                     </ul>
