@@ -6,13 +6,16 @@ from odoo import models, fields, api
 class SaleInherit(models.Model):
     _inherit = 'sale.order'
 
-    contact_person = fields.Char(string='Contact Person ')
-    company = fields.Char(string='Company')
-    billing_contact = fields.Char(string='Billing Contact')
-    email = fields.Char(string='Email')
-    billing_email = fields.Char(string='Billing Email')
-    telephone = fields.Char(string='Telephone')
-    billing_telephone = fields.Char(string='Billing Telephone')
+    _check_company_auto = True
+
+    company_id = fields.Many2one('res.company')
+    contact_person = fields.Char(string='Contact Person', check_company=True)
+    company = fields.Char(string='Company', check_company=True)
+    billing_contact = fields.Char(string='Billing Contact', related='partner_invoice_id.child_ids.name')
+    email = fields.Char(string='Email', related='partner_invoice_id.email')
+    billing_email = fields.Char(string='Billing Email', related='partner_invoice_id.child_ids.email')
+    telephone = fields.Char(string='Telephone', related='partner_invoice_id.phone')
+    billing_telephone = fields.Char(string='Billing Telephone', related='partner_invoice_id.child_ids.phone')
     recurring_period = fields.Char(string='Recurring Period')
     term_and_condition = fields.Char(string='Terms & Conditions')
     contract = fields.Char(string='Contract')

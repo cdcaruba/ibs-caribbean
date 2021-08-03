@@ -6,7 +6,7 @@ from odoo import models, fields, api
 class InvoiceInherit(models.Model):
     _inherit = 'account.move'
 
-    contact_person = fields.Char(string='Contact Person ')
+    contact_person = fields.Char(string='Contact Person')
     company = fields.Char(string='Company')
     billing_contact = fields.Char(string='Billing Contact')
     email = fields.Char(string='Email')
