@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Customize the JS of this report to show footer only on last page -->
+    <template id="minimal_layout_ibs" inherit_id="web.minimal_layout">
+      <xpath expr="//t[@t-if='subst_needed']" position="replace">
+        <script src='/quotation_builder_pdf/static/src/js/subst.js'></script>
+      </xpath>
+    </template>
+    <template id="report_saleorder_document_quotation_builder" inherit_id="sale.report_saleorder_document" priority='99'>
+        <!-- Put addresses inside the report_saleorder_document page so the layout fits better with the paper format -->
+        <xpath expr="//t[@t-set='address']/../t[3]" position="replace"/>
+        <xpath expr="//t[@t-set='address']" position="replace"/>
+        <xpath expr="//h2[hasclass('mt16')]" position="before">
+            <div t-attf-class="o_company_#{doc.company_id.id}_layout">
+                <div class="o_clean_header">
+                    <div class="row">
+                        <div class="col-6">
+                            <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" alt="Logo"/>
+                        </div>
+                        <div class="col-5 offset-1" name="company_address">
+                            <ul class="list-unstyled">
+                                <strong><li t-if="doc.company_id.name"><span t-field="doc.company_id.name"/></li></strong>
+                                <li t-if="doc.company_id.vat"><t t-esc="doc.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="doc.company_id.vat"/></li>
+                                <li t-if="doc.company_id.phone">Tel: <span t-field="doc.company_id.phone"/></li>
+                                <li t-if="doc.company_id.email"><span t-field="doc.company_id.email"/></li>
+                                <li t-if="doc.company_id.website"><span t-field="doc.company_id.website"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px;">
+                        <t t-if="doc.partner_shipping_id == doc.partner_invoice_id
+                         and doc.partner_invoice_id != doc.partner_id
+                         or doc.partner_shipping_id != doc.partner_invoice_id">
+                            <div class="col-6">
+                                <strong t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and Shipping Address:</strong>
+                                <strong t-if="doc.partner_shipping_id != doc.partner_invoice_id">Invoicing Address:</strong>
+                                <div t-field="doc.partner_invoice_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                                    <strong>Shipping Address:</strong>
+                                    <div t-field="doc.partner_shipping_id"
+                                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                </t>
+                            </div>
+                        </t>
+                        <div class="col-5 offset-1">
+                            <div t-field="doc.partner_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                            <p t-if="doc.partner_id.vat"><t t-esc="doc.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="doc.partner_id.vat"/></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Adding custom quotation blocks (mail goal of task) and add "Pricing" title-->
+        <xpath expr="//table[hasclass('o_main_table')]" position="before">
+            <div class="row" style="page-break-after: always;">
+                <div class="col-auto custom_template">
+                    <t t-raw="doc.x_txt_website_description"/>
+                    <t t-foreach="doc.order_line" t-as="line">
+                        <t t-raw="line.x_txt_website_description"/>
+                    </t>
+                </div>
+            </div>
+            <h2 class="mt16">
+                <span>Pricing</span>
+            </h2>
+        </xpath>
+    </template>
+</odoo>
