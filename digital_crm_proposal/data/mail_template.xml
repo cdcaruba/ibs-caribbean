@@ -1,0 +1,368 @@
+<odoo>
+
+
+    <template id="sale.mail_notification_paynow_online" inherit_id="mail.mail_notification_paynow"
+                name="Mail: Pay Now mail notification template">
+            <xpath expr="//t[@t-set='access_name']" position="after">
+                <t t-set="access_name">
+                    <t t-if="record._name == 'sale.order'">
+                        <t t-if="record.is_proposal">
+                            <t t-if="record.state in ('draft', 'sent')">
+                                View Proposal
+                            </t>
+                            <t t-else="">
+                                View Advertising Agreement
+                            </t>
+                        </t>
+                        <t t-else="">
+                            View <t t-esc="model_description or 'document'"/>
+                        </t>  
+                    </t>
+                    <t t-else="">
+                            View <t t-esc="model_description or 'document'"/>
+                    </t> 
+                   
+                </t>
+            </xpath>
+            <xpath expr="//span[@style='font-size: 10px;']" position="replace">
+               
+                <t t-if="record._name == 'sale.order'">
+                    <t t-if="record.is_proposal">
+                        <t t-if="record.state in ('draft', 'sent')">
+                            <span style="font-size: 10px;">View Proposal </span>
+                        </t>
+                            <t t-else="">
+                                <span style="font-size: 10px;">View Advertising Agreement </span>
+                                
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <span style="font-size: 10px;">Your <t t-esc="model_description or 'document'"/> </span>
+                        </t>  
+                    </t>
+                <t t-else="">
+                    <span style="font-size: 10px;">Your <t t-esc="model_description or 'document'"/> </span>
+                </t> 
+                   
+       
+            </xpath>
+            <xpath expr="//t[@t-set='access_name']" position="after">
+                <t t-if="record._name == 'sale.order'">
+
+                    <t t-if="record.has_to_be_signed(include_draft=True)">
+
+                        <t t-if="record.has_to_be_paid()" t-set="access_name">
+                            <t t-if="record.is_proposal">
+                                Sign &amp; Pay Proposal
+                            </t>
+                            <t t-else="">
+                                Sign &amp; Pay Quotation
+                            </t>                        
+                        </t>
+                        <t t-else="" t-set="access_name">
+                        
+                            <t t-if="record.is_proposal">
+                                Accept &amp; Sign Proposal
+                            </t>
+                            <t t-else="">
+                                Accept &amp; Sign Quotation
+                            </t>  
+                        </t>
+                    </t>
+                   <t t-elif="record.has_to_be_paid(include_draft=True)">
+                        <t t-set="access_name">
+                            <t t-if="record.is_proposal">
+                                Accept &amp; Pay Proposal
+                            </t>
+                            <t t-else="">
+                                Accept &amp; Pay Quotation
+                            </t>  
+                        </t>
+                    </t>
+                    <t t-elif="record.state in ('draft', 'sent')">
+                        <t t-set="access_name">
+                            <t t-if="record.is_proposal">
+                                View Proposal
+                            </t>
+                            <t t-else="">
+                                View Quotation
+                            </t> 
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-set="access_name">
+                            <t t-if="record.is_proposal">
+                                View Signed Advertising Agreement
+                            </t>
+                            <t t-else="">
+                                View Sales Orders
+                            </t> 
+                        </t>
+                    </t>
+                </t>
+            </xpath>
+    </template>
+    <data>
+        <record id="email_template_edi_proposal_digital" model="mail.template">
+            <field name="name">Proposal Order: Send by email</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">${object.company_id.name} ${object.state not in ('draft', 'sent') and 'Order' or object.is_proposal and 'Proposal' or 'Quotation'} (Ref ${object.name or 'n/a' })</field>
+            <field name="email_from">${(object.user_id.email_formatted or user.email_formatted) | safe}</field>
+            <field name="partner_to">${object.partner_id.id if not object.contact_person_id else object.contact_person_id.id}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        % set doc_name = 'quotation' if object.state in ('draft', 'sent') else 'order'
+        % set doc_name = 'Proposal' if object.is_proposal
+
+        Hello 
+        %if object.is_proposal:
+            <span>${object.partner_id.name}</span>
+        %endif
+        <br/><br/>
+        Your
+        
+        % if object.is_proposal:
+            proposal <strong>${object.name}</strong> ( with reference ${object.name}) is ready! <br/>
+We strive to be as paperless as possible and kindly request that you click the button below to review. Should everything you see in here be to your satisfaction, go ahead and proceed with the Accept and Sign. Once you have signed, you will receive an email with a pdf copy of your advertising agreement for your files. 
+That's it! (Next is when the real magic starts to happen!) <br/><br/>
+
+Should you have any questions, comments, or feedback please never hesitate and let me know. It's been a pleasure to provide you with this offer, and I look forward to 
+being part of your digital signage success.<br/> <br/>
+
+<br/>
+        % else :
+            % if ctx.get('proforma'):
+                Pro forma invoice for ${doc_name} <strong>${object.name}</strong>
+                % if object.origin:
+                    (with reference: ${object.origin} )
+                % endif
+                amounting in <strong>${format_amount(object.amount_total, object.pricelist_id.currency_id)}</strong> is available.
+            % else:
+                ${doc_name} <strong>${object.name}</strong>
+                % if object.origin:
+                    (with reference: ${object.origin} )
+                % endif
+                amounting in <strong>${format_amount(object.amount_total, object.pricelist_id.currency_id)}</strong> is ready for review.
+            % endif
+            <br/><br/>
+            Do not hesitate to contact us if you have any questions.
+        % endif
+        <br/>
+    </p>
+</div>
+            </field>
+            <field name="report_template" ref="digital_crm_proposal.action_report_proposal"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+<!-- ##################### order Confirmation Box ####################### -->
+
+
+        <record id="mail_template_sale_confirmation_degital" model="mail.template">
+            <field name="name">Proposal Order: Confirmation Email</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">${object.company_id.name} ${' Advertising Agreement ' if object.is_proposal else (object.get_portal_last_transaction().state == 'pending' and 'Pending Order' or 'Order')} (Ref ${object.name or 'n/a' })</field>
+            <field name="email_from">${(object.user_id.email_formatted or user.email_formatted) | safe}</field>
+            <field name="partner_to">${object.partner_id.id if not object.contact_person_id else object.contact_person_id.id}</field>
+       
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 12px;">
+        
+
+        % if object.is_proposal:
+            Hello ${object.partner_id.name}<br/><br/>
+
+Welcome to the Digital View family! Thank you for accepting the proposal, now let's get the ball rolling.<br/><br/>
+
+For your records, a copy of your signed advertising agreement can be found attached to this email. I will be personally reaching out to you for us to arrange the necessary bank standing order documents.<br/><br/>
+
+Once finance has confirmed this has been completed, you will receive an email from our creative team with detailed directions about the magic part I was talking about. If there is someone else that will be handling the creative, please be so kind and share with us their name and contact information by replying to this email.<br/><br/>
+
+Should there be any questions, comments, or feedback please never hesitate and let me know how I can be of assistance or serve you better.<br/><br/>
+
+Once again, on behalf of all of us at Digital View we thank you for your business.<br/><br/>
+<br/>
+
+% if object.user_id and object.user_id.signature:
+${object.user_id.signature | safe}
+% endif
+        % else:
+            Hello,
+        <br/><br/>
+            % set transaction = object.get_portal_last_transaction()
+            Your order <strong>${object.name}</strong> amounting in <strong>${format_amount(object.amount_total, object.currency_id)}</strong>
+            % if object.state == 'sale' or (transaction and transaction.state in ('done', 'authorized')) :
+                has been confirmed.<br/>
+                Thank you for your trust!
+            % elif transaction and transaction.state == 'pending' :
+                is pending. It will be confirmed when the payment is received.
+                % if object.reference:
+                    Your payment reference is <strong>${object.reference}</strong>.
+                % endif
+            % endif
+            <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        % endif
+        
+        <br/><br/>
+    </p>
+% if object.website_id:
+    <div style="margin: 0px; padding: 0px;">
+        <table width="100%" style="color: #454748; font-size: 12px; border-collapse: collapse;">
+            <tr style="border-bottom: 2px solid #dee2e6;">
+                <td width="18%"><strong>Products</strong></td>
+                <td></td>
+                <td><strong>Quantity</strong></td>
+                <td width="10%" align="center"><strong>Price</strong></td>
+            </tr>
+        </table>
+        % for line in object.order_line:
+            % if not line.is_delivery and line.display_type in ['line_section', 'line_note']:
+                <table width="100%" style="color: #454748; font-size: 12px; border-collapse: collapse;">
+                    <tr style="${loop.cycle('background-color: #f2f2f2', 'background-color: #ffffff')}">
+                        <td colspan="4">
+                            % if line.display_type == 'line_section':
+                                <strong>${line.name}</strong>
+                            % elif line.display_type == 'line_note':
+                                <i>${line.name}</i>
+                            % endif
+                        </td>
+                    </tr>
+                </table>
+            % elif not line.is_delivery
+                <table width="100%" style="color: #454748; font-size: 12px; border-collapse: collapse;">
+                    <tr style="${loop.cycle('background-color: #f2f2f2', 'background-color: #ffffff')}">
+                        <td style="width: 150px;">
+                            <img src="/web/image/product.product/${line.product_id.id}/image_128" style="width: 64px; height: 64px; object-fit: contain;" alt="Product image"></img>
+                        </td>
+                        <td align="left">${line.product_id.name}</td>
+                        <td>${line.product_uom_qty}</td>
+                        % if object.user_id.has_group('account.group_show_line_subtotals_tax_excluded'):
+                            <td align="right">${format_amount(line.price_reduce_taxexcl, object.currency_id)}</td>
+                        % endif
+                        % if object.user_id.has_group('account.group_show_line_subtotals_tax_included'):
+                            <td align="right">${format_amount(line.price_reduce_taxinc, object.currency_id)}</td>
+                        % endif
+                    </tr>
+                </table>
+            % endif
+        % endfor
+    </div>
+    % if object.carrier_id:
+    <div style="margin: 0px; padding: 0px;">
+        <table width="100%" style="color: #454748; font-size: 12px; border-spacing: 0px 4px;" align="right">
+            <tr>
+                <td style="width: 60%"/>
+                <td style="width: 30%; border-top: 1px solid #dee2e6;" align="right"><strong>Delivery:</strong></td>
+                <td style="width: 10%; border-top: 1px solid #dee2e6;" align="right">${format_amount(object.amount_delivery, object.currency_id)}</td>
+            </tr>
+            <tr>
+                <td style="width: 60%"/>
+                <td style="width: 30%;" align="right"><strong>SubTotal:</strong></td>
+                <td style="width: 10%;" align="right">${format_amount(object.amount_untaxed, object.currency_id)}</td>
+            </tr>
+        </table>
+    </div>
+    % else:
+    <div style="margin: 0px; padding: 0px;">
+        <table width="100%" style="color: #454748; font-size: 12px; border-spacing: 0px 4px;" align="right">
+            <tr>
+                <td style="width: 60%"/>
+                <td style="width: 30%; border-top: 1px solid #dee2e6;" align="right"><strong>SubTotal:</strong></td>
+                <td style="width: 10%; border-top: 1px solid #dee2e6;" align="right">${format_amount(object.amount_untaxed, object.currency_id)}</td>
+            </tr>
+        </table>
+    </div>
+    % endif
+    <div style="margin: 0px; padding: 0px;">
+        <table width="100%" style="color: #454748; font-size: 12px; border-spacing: 0px 4px;" align="right">
+            <tr>
+                <td style="width: 60%"/>
+                <td style="width: 30%;" align="right"><strong>Taxes:</strong></td>
+                <td style="width: 10%;" align="right">${format_amount(object.amount_tax, object.currency_id)}</td>
+            </tr>
+            <tr>
+                <td style="width: 60%"/>
+                <td style="width: 30%; border-top: 1px solid #dee2e6;" align="right"><strong>Total:</strong></td>
+                <td style="width: 10%; border-top: 1px solid #dee2e6;" align="right">${format_amount(object.amount_total, object.currency_id)}</td>
+            </tr>
+        </table>
+    </div>
+    % if object.partner_invoice_id:
+    <div style="margin: 0px; padding: 0px;">
+        <table width="100%" style="color: #454748; font-size: 12px;">
+            <tr>
+                <td style="padding-top: 10px;">
+                    <strong>Bill to:</strong>
+                    ${object.partner_invoice_id.street or ''}
+                    ${object.partner_invoice_id.city or ''}
+                    ${object.partner_invoice_id.state_id.name or ''}
+                    ${object.partner_invoice_id.zip or ''}
+                    ${object.partner_invoice_id.country_id.name or ''}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Payment Method:</strong>
+                    % if transaction.payment_token_id:
+                        ${transaction.payment_token_id.name}
+                    % else:
+                        ${transaction.acquirer_id.name}
+                    % endif
+                     (${format_amount(transaction.amount, object.currency_id)})
+                </td>
+            </tr>
+        </table>
+    </div>
+    % endif
+    % if object.partner_shipping_id and not object.only_services:
+    <div style="margin: 0px; padding: 0px;">
+        <table width="100%" style="color: #454748; font-size: 12px;">
+            <tr>
+                <td>
+                    <br/>
+                    <strong>Ship to:</strong>
+                    ${object.partner_shipping_id.street or ''}
+                    ${object.partner_shipping_id.city or ''}
+                    ${object.partner_shipping_id.state_id.name or ''}
+                    ${object.partner_shipping_id.zip or ''}
+                    ${object.partner_shipping_id.country_id.name or ''}
+                </td>
+            </tr>
+        </table>
+        % if object.carrier_id:
+        <table width="100%" style="color: #454748; font-size: 12px;">
+            <tr>
+                <td>
+                    <strong>Shipping Method:</strong>
+                    ${object.carrier_id.name}
+                    % if object.carrier_id.fixed_price == 0.0:
+                        (Free)
+                    % else:
+                        (${format_amount(object.carrier_id.fixed_price, object.currency_id)})
+                    % endif
+                </td>
+            </tr>
+        </table>
+        % endif
+    </div>
+    % endif
+% endif
+</div></field>
+            <field name="report_template" ref="digital_crm_proposal.action_report_proposal"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+
+    </data>
+</odoo>
