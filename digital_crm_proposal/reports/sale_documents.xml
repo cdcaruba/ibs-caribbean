@@ -47,7 +47,7 @@
                 </div>   
                 <div class="row ">
                     <div class="col-6">
-                        <strong>Order Date  :</strong> <span t-esc="doc.date_order" /> <br/>
+                        <!-- <strong>Order Date  :</strong> <span t-esc="doc.date_order" /> <br/> -->
                         <strong>Recurring Period : </strong> <span t-field="doc.recurring_id.name"/><br/>
                         <strong>Contact Person : </strong> <span t-field="doc.contact_person_id.name"/><br/>
                         <strong>Contact Email : </strong>  <span t-field="doc.contact_email"/><br/>

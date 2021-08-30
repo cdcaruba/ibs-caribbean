@@ -4,7 +4,12 @@
         <field name="model">sale.order</field>
         <field name="type">form</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
+<<<<<<< HEAD
+        <field name="arch" type="xml"> 
+       
+=======
         <field name="arch" type="xml">     
+>>>>>>> cd1ffb892d05dc71d3de7760c65c5858946bc5f7
             <field name="partner_shipping_id" position="after">
                 <field name="is_proposal" invisible="1"/>
                 <field name="billing_email" attrs="{'readonly':[('state','=','sale')],'invisible':[('is_proposal', '=', False)]}"/>

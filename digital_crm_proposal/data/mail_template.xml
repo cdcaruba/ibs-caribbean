@@ -3,7 +3,7 @@
 
     <template id="sale.mail_notification_paynow_online" inherit_id="mail.mail_notification_paynow"
                 name="Mail: Pay Now mail notification template">
-            <xpath expr="//t[@t-set='access_name']" position="after">
+            <!-- <xpath expr="//t[@t-set='access_name']" position="after">
                 <t t-set="access_name">
                     <t t-if="record._name == 'sale.order'">
                         <t t-if="record.is_proposal">
@@ -23,7 +23,7 @@
                     </t> 
                    
                 </t>
-            </xpath>
+            </xpath> -->
             <xpath expr="//span[@style='font-size: 10px;']" position="replace">
                
                 <t t-if="record._name == 'sale.order'">
