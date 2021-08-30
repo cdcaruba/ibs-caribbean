@@ -67,7 +67,7 @@
         <!-- Rename Adevertising agreements  -->
         <xpath expr="//h3[@id='details']" position="replace">
             <t t-if="sale_order.is_proposal">
-                <h3 id="details">Advertising Agreement</h3>
+<!--                 <h3 id="details">Advertising Agreement</h3> -->
             </t>
             <t t-else="">
                 <h3 id="details">Pricing</h3>
