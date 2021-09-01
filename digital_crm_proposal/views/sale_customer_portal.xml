@@ -90,7 +90,7 @@
                             <t t-if="sale_order.company_id.attach_terms_conditions">
                                 <t t-foreach="sale_order.company_id.attach_terms_conditions" t-as="attach">
                                     
-                                    <a t-attf-href="/web/content/#{attach.id}?download=true&amp;access_token=#{attachment.generate_access_token()}">
+                                    <a t-attf-href="https://docs.google.com/document/d/1-EdBNGgURmJs79o_eyqhoAkAa_T8-LoMgj-Zf9qeXJ0/edit">
                                         Terms &amp; Conditions
                                     </a>
                                 </t>
