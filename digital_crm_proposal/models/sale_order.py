@@ -115,3 +115,13 @@ class SaleOrder(models.Model):
         return super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
 
 
+    def action_confirm(self):     
+
+        if  self.is_proposal :  
+            partner_emails = ['angeloquandus@ibs.group','keananmaxwell@ibs.group']
+            followers = []
+            for emails in partner_emails: 
+                partner_ids = self.env['res.partner'].search([('email','=',emails)], limit=1).id
+                followers.append(partner_ids)
+            self.message_subscribe(followers)  
+        return super(SaleOrder, self).action_confirm()  
