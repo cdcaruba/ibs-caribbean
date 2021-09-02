@@ -117,7 +117,7 @@ class CustomerPortal(CustomerPortal):
        
 
         _message_post_helper(
-            'sale.order', order_sudo.id, _('Order signed by %s') % (name,),
+            'sale.order', order_sudo.id, _('Advertising Agreement  has been signed! \n  Yay! We have %s onboard. Copy of the signed agreement is attached.') % (name,),
             attachments=[('%s.pdf' % order_sudo.name, pdf)],
             **({'token': access_token} if access_token else {}))
 
