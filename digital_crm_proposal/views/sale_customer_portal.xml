@@ -67,14 +67,15 @@
         <!-- Rename Adevertising agreements  -->
         <xpath expr="//h3[@id='details']" position="replace">
             <t t-if="sale_order.is_proposal">
-<!--                 <h3 id="details">Advertising Agreement</h3> -->
+                <h3 id="details">Advertising Agreement</h3>
             </t>
             <t t-else="">
                 <h3 id="details">Pricing</h3>
             </t>
         </xpath>
 
-       <xpath expr="//section[@id='terms']" position="replace">
+
+        <xpath expr="//section[@id='terms']" position="replace">
             <t t-if="sale_order.is_proposal">
                 <t t-if="sale_order.state in ['draft', 'sent']">
                     <section id="terms" class="mt-5" t-if="sale_order.note">
@@ -92,7 +93,7 @@
                 <em t-field="sale_order.note"/>
             </section>
             </t>
-        </xpath> 
+        </xpath>
 
     </template>
     
@@ -105,22 +106,27 @@
                         <p>
                             <span>By signing this agreement, I have 
                             read and accept the 
-                            <t t-if="sale_order.company_id.attach_terms_conditions">
-                                <t t-foreach="sale_order.company_id.attach_terms_conditions" t-as="attach">
-                                    
-                                    <a t-attf-href="https://docs.google.com/document/d/1-EdBNGgURmJs79o_eyqhoAkAa_T8-LoMgj-Zf9qeXJ0/edit?usp=sharing">
-                                        Terms &amp; Conditions
-                                    </a>
-                                </t>
-                            </t>
-                            <t t-else="">
-                            Terms &amp; Conditions
-                            </t>
-                            on behalf of <strong> <span t-field="sale_order.partner_id.name"/> </strong>                             
+                            <a t-attf-href="https://docs.google.com/document/d/1-EdBNGgURmJs79o_eyqhoAkAa_T8-LoMgj-Zf9qeXJ0/edit?usp=sharing" target="_blank">
+                                        <span>Terms &amp; Conditions </span>
+                            </a>
+                            <span>on behalf of </span><strong> <span t-field="sale_order.partner_id.name"/> </strong>                             
                             for the amount of <strong><span t-field="sale_order.amount_total"/> </strong>  
                             per month starting on <strong> <span t-field="sale_order.start_date"/> </strong> and 
                             ending on <strong> <span t-field="sale_order.end_date"/>  </strong> 
                             </span>
+                            <!--<t t-if="sale_order.company_id.attach_terms_conditions">
+                                <t t-foreach="sale_order.company_id.attach_terms_conditions" t-as="attach"> -->
+                                    
+                                    <!-- <a href="docs.google.com/document/d/1-EdBNGgURmJs79o_eyqhoAkAa_T8-LoMgj-Zf9qeXJ0/edit?usp=sharing" > -->
+                                    <!-- <a t-attf-href="/web/content/#{attach.id}?download=true&amp;access_token=#{attach.generate_access_token()}">
+                                        Terms &amp; Conditions
+                                    </a> -->
+                                <!-- </t>
+                            </t>
+                            <t t-else="">
+                            Terms &amp; Conditions
+                            </t> -->
+                            
                         </p>
                     </t>
                     <t t-else="">
