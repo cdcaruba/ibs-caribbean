@@ -21,9 +21,12 @@
             </field>
             <field name="note" position="before">
                 <group colspan="4">
-                     <field name="conditions_id"  attrs="{'readonly':[('state','=','sale')],'invisible':[('is_proposal', '=', False)]}"/>
+                     <field name="conditions_id"  attrs="{'readonly':[('state','=','sale')],'invisible':['|',('is_proposal', '=', False),('is_proposal', '=', True), ('state','=','sale')]}"/>
                 </group>
                
+            </field>
+            <field name="note" position="replace">
+                 <field name="note" nolabel="1" attrs="{'invisible':[('is_proposal', '=', True), ('state','=','sale')]}" placeholder="Terms and conditions..."/>
             </field>
         
         </field>
