@@ -74,7 +74,25 @@
             </t>
         </xpath>
 
-        
+       <xpath expr="//section[@id='terms']" position="replace">
+            <t t-if="sale_order.is_proposal">
+                <t t-if="sale_order.state in ['draft', 'sent']">
+                    <section id="terms" class="mt-5" t-if="sale_order.note">
+                        <h3 class="">Terms &amp; Conditions</h3>
+                        <hr class="mt-0 mb-1"/>
+                        <em t-field="sale_order.note"/>
+                    </section>
+                </t>
+
+            </t>
+            <t t-else="">
+            <section id="terms" class="mt-5" t-if="sale_order.note">
+                <h3 class="">Terms &amp; Conditions</h3>
+                <hr class="mt-0 mb-1"/>
+                <em t-field="sale_order.note"/>
+            </section>
+            </t>
+        </xpath> 
 
     </template>
     
@@ -90,7 +108,7 @@
                             <t t-if="sale_order.company_id.attach_terms_conditions">
                                 <t t-foreach="sale_order.company_id.attach_terms_conditions" t-as="attach">
                                     
-                                    <a t-attf-href="/web/content/#{attach.id}?download=true&amp;access_token=#{attach.generate_access_token()}">
+                                    <a t-attf-href="https://docs.google.com/document/d/1-EdBNGgURmJs79o_eyqhoAkAa_T8-LoMgj-Zf9qeXJ0/edit?usp=sharing">
                                         Terms &amp; Conditions
                                     </a>
                                 </t>
