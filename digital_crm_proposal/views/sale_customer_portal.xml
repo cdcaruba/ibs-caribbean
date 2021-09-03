@@ -106,7 +106,7 @@
                         <p>
                             <span>By signing this agreement, I have 
                             read and accept the 
-                            <a t-attf-href="https://dash.digitalviewmedia.com/web/content/10558?unique=318ab419e926c1c6dc8d1d93a9160891aede83ce&download=true" target="_blank">
+                            <a t-attf-href="https://dash.digitalviewmedia.com/web/content/10558?unique=318ab419e926c1c6dc8d1d93a9160891aede83ce&amp;download=true" target="_blank">
                                         <span>Terms &amp; Conditions </span>
                             </a>
                             <span>on behalf of </span><strong> <span t-field="sale_order.partner_id.name"/> </strong>                             
