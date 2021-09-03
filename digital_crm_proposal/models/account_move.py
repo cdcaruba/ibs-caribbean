@@ -26,3 +26,11 @@ class AccountMove(models.Model):
         if self.contact_person_id:
             self.contact_email = self.contact_person_id.email
             self.contact_phone = self.contact_person_id.phone
+
+
+    @api.model
+    def create(self, vals):
+        res = super(AccountMove, self).create(vals)
+        if res['narration'] and self.env.company.is_proposal:
+            res['narration'] = " "  
+        return res
