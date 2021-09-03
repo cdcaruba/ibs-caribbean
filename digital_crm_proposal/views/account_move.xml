@@ -8,9 +8,6 @@
             <field name="partner_shipping_id" position="after">
                 <field name="is_proposal" invisible="1"/>
                 <field name="billing_email" attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
-            <field name="partner_shipping_id" position="after">
-                <field name="is_proposal" invisible="1"/>
-                <field name="billing_email" attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
                 <field name="billing_phone"  attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
                 
                 <field name="recurring_id"  attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
@@ -24,11 +21,9 @@
                 <field name="end_date" attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
             </field>
             
-
             <field name="narration" position="replace">
                 <field name="narration" placeholder="Add an internal note..." nolabel="1" height="50" attrs="{'invisible':[('is_proposal', '=', True)]}"/>
             </field>
-        
         </field>
     </record>
 </odoo>
