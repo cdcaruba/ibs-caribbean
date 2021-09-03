@@ -5,8 +5,9 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml"> 
-            <field name="company_id" position="replace">
-            </field>
+            <field name="partner_shipping_id" position="after">
+                <field name="is_proposal" invisible="1"/>
+                <field name="billing_email" attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
             <field name="partner_shipping_id" position="after">
                 <field name="is_proposal" invisible="1"/>
                 <field name="billing_email" attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
@@ -16,7 +17,6 @@
                 
             </field>
             <field name="journal_id" position="before">
-                <field name='company_id' invisible="1" attrs="{'readonly':[('state','=','posted')]}"/>
                 <field name="contact_person_id" options="{'no_create_edit': True}" attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
                 <field name="contact_email"  attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
                 <field name="contact_phone"  attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
@@ -24,6 +24,10 @@
                 <field name="end_date" attrs="{'readonly':[('state','=','posted')],'invisible':[('is_proposal', '=', False)]}"/>
             </field>
             
+
+            <field name="narration" position="replace">
+                <field name="narration" placeholder="Add an internal note..." nolabel="1" height="50" attrs="{'invisible':[('is_proposal', '=', True)]}"/>
+            </field>
         
         </field>
     </record>
