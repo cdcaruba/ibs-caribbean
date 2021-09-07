@@ -30,13 +30,14 @@ class SaleOrder(models.Model):
                         div.clear()
                         div['style'] = "page-break-after: always;"
                     # We convert all bootstrap grid classes to general sizes so that they apply to the PDF (i.e. col-lg-6 -> col-6)
-                    classes = []
-                    for c in div['class']:
-                        if c.startswith('col-'):
-                            classes.append('col-' + ''.join([digit for digit in c if digit.isdigit()]))
-                        else:
-                            classes.append(c)
-                    div['class'] = classes
+                    if div.get('class'):
+                        classes = []
+                        for c in div['class']:
+                            if c.startswith('col-'):
+                                classes.append('col-' + ''.join([digit for digit in c if digit.isdigit()]))
+                            else:
+                                classes.append(c)
+                        div['class'] = classes
 
                 record['x_txt_website_description'] = soup.prettify()
             else:
@@ -66,13 +67,14 @@ class SaleOrderLine(models.Model):
                         div.clear()
                         div['style'] = "page-break-after: always;"
                     # We convert all bootstrap grid classes to general sizes so that they apply to the PDF (i.e. col-lg-6 -> col-6)
-                    classes = []
-                    for c in div['class']:
-                        if c.startswith('col-'):
-                            classes.append('col-' + ''.join([digit for digit in c if digit.isdigit()]))
-                        else:
-                            classes.append(c)
-                    div['class'] = classes
+                    if div.get('class'):
+                        classes = []
+                        for c in div['class']:
+                            if c.startswith('col-'):
+                                classes.append('col-' + ''.join([digit for digit in c if digit.isdigit()]))
+                            else:
+                                classes.append(c)
+                        div['class'] = classes
 
                 record['x_txt_website_description'] = soup.prettify()
             else:
