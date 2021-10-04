@@ -4,7 +4,7 @@
 from odoo import fields, models, api
 from bs4 import BeautifulSoup
 
-TEXT_ATTRIBUTES = ['Title', 'Text block', 'Separator', 'Image - Text', 'Text - Image', 'Picture', 'Columns']
+TEXT_ATTRIBUTES = ['Title', 'Text block', 'Separator', 'Image - Text', 'Text - Image', 'Picture']
 
 
 class SaleOrder(models.Model):
