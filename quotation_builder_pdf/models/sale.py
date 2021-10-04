@@ -13,6 +13,7 @@ class SaleOrder(models.Model):
     x_txt_website_description = fields.Html('Text Website Description', compute='_sanitize_html',
                                             sanitize_attributes=False)
 
+
     @api.depends('website_description')
     def _sanitize_html(self):
         for record in self:
@@ -48,6 +49,7 @@ class SaleOrderLine(models.Model):
     x_txt_website_description = fields.Html('Text Website Description', compute='_sanitize_html',
                                             sanitize_attributes=False)
 
+
     @api.depends('website_description')
     def _sanitize_html(self):
         for record in self:
@@ -71,6 +73,7 @@ class SaleOrderLine(models.Model):
                         else:
                             classes.append(c)
                     div['class'] = classes
+
 
                 record['x_txt_website_description'] = soup.prettify()
             else:

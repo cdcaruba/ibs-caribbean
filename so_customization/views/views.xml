@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="sale_inherit_crm" model="ir.ui.view">
+            <field name="name">CRM Quotation</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                    <field name="contact_person" attrs="{'invisible': [('company_id', '!=', 'DigitalView Aruba')]}"/>
+                    <!--              <field name="company_id" domain="[('company_id', '=', True)]" />-->
+                    <field name="company_id" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                    <field name="email" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                    <field name="start_date" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+
+                    <field name="telephone" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                    <field name="recurring_period" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                    <!--            <field name="term_and_condition"/>-->
+
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="company" attrs="{'invisible': [('company_id', '!=', 'DigitalView Aruba')]}"/>
+                    <field name="billing_contact" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                    <field name="billing_email" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                    <field name="billing_telephone" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                    <field name="end_date" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                    <field name="contract" attrs="{'invisible': [('company_id', '!=', 4)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
