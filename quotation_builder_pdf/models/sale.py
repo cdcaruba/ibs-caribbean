@@ -4,7 +4,7 @@
 from odoo import fields, models, api
 from bs4 import BeautifulSoup
 
-TEXT_ATTRIBUTES = ['Title', 'Text block', 'Separator', 'Image - Text', 'Text - Image']
+TEXT_ATTRIBUTES = ['Title', 'Text block', 'Separator', 'Image - Text', 'Text - Image', 'Picture']
 
 
 class SaleOrder(models.Model):
@@ -12,7 +12,6 @@ class SaleOrder(models.Model):
 
     x_txt_website_description = fields.Html('Text Website Description', compute='_sanitize_html',
                                             sanitize_attributes=False)
-
 
     @api.depends('website_description')
     def _sanitize_html(self):
@@ -31,7 +30,7 @@ class SaleOrder(models.Model):
                         div['style'] = "page-break-after: always;"
                     # We convert all bootstrap grid classes to general sizes so that they apply to the PDF (i.e. col-lg-6 -> col-6)
                     classes = []
-                    for c in div['class']:
+                    for c in div.get('class'):
                         if c.startswith('col-'):
                             classes.append('col-' + ''.join([digit for digit in c if digit.isdigit()]))
                         else:
@@ -49,7 +48,6 @@ class SaleOrderLine(models.Model):
     x_txt_website_description = fields.Html('Text Website Description', compute='_sanitize_html',
                                             sanitize_attributes=False)
 
-
     @api.depends('website_description')
     def _sanitize_html(self):
         for record in self:
@@ -67,7 +65,7 @@ class SaleOrderLine(models.Model):
                         div['style'] = "page-break-after: always;"
                     # We convert all bootstrap grid classes to general sizes so that they apply to the PDF (i.e. col-lg-6 -> col-6)
                     classes = []
-                    for c in div['class']:
+                    for c in div.get('class'):
                         if c.startswith('col-'):
                             classes.append('col-' + ''.join([digit for digit in c if digit.isdigit()]))
                         else:
