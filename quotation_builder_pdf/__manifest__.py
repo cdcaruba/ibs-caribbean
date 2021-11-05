@@ -21,5 +21,6 @@
         'data/report_paperformat.xml',
         'views/assets.xml',
         'reports/sale_report.xml',
+        'reports/layout_report.xml',
     ],
 }
