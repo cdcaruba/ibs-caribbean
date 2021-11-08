@@ -4,7 +4,7 @@
 from odoo import fields, models, api
 from lxml import html
 
-TEXT_ATTRIBUTES = ['Title', 'Text block', 'Separator', 'Image - Text', 'Text - Image', 'Picture', 'Columns']
+TEXT_ATTRIBUTES = ['Title', 'Text block', 'Separator', 'Image - Text', 'Text - Image', 'Columns']
 
 
 class SaleOrder(models.Model):
