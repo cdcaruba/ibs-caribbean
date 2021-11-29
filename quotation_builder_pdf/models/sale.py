@@ -6,7 +6,6 @@ from lxml import html
 
 TEXT_ATTRIBUTES = ['Title', 'Text block', 'Separator', 'Image - Text', 'Text - Image', 'Columns']
 
-
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
@@ -94,4 +93,4 @@ class SaleOrderLine(models.Model):
                     if classes:
                         div.set('class', ' '.join(classes))
 
-                record.x_txt_website_description = html.tostring(tree, pretty_print=True)
+                    record.x_txt_website_description = html.tostring(tree, pretty_print=True)
