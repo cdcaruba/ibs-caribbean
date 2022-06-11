@@ -15,7 +15,7 @@
     'author': "Odoo Inc",
     'website': "http://www.odoo.com",
     'category': 'Custom Development',
-    'version': '0.1',
+    'version': '14.0.1.0.0',
     'depends': ['sale_quotation_builder', 'website', 'web_enterprise'],
     'data': [
         'data/report_paperformat.xml',
