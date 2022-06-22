@@ -19,8 +19,12 @@
     'depends': ['sale_quotation_builder', 'website', 'web_enterprise'],
     'data': [
         'data/report_paperformat.xml',
-        'views/assets.xml',
         'reports/sale_report.xml',
         'reports/layout_report.xml',
     ],
+    'assets': {
+        'web.assets_common': [
+            'quotation_builder_pdf/static/src/css/report_assets_common.css',
+        ],
+    },
 }
