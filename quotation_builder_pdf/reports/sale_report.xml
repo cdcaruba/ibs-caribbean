@@ -2,7 +2,7 @@
 <odoo>
     <!-- Customize the JS of this report to show footer only on last page -->
     <template id="minimal_layout_ibs" inherit_id="web.minimal_layout">
-      <xpath expr="//script[@t-if='subst']" position="replace">
+      <xpath expr="//script[1]" position="replace">
         <script src='/quotation_builder_pdf/static/src/js/subst.js'></script>
       </xpath>
     </template>
