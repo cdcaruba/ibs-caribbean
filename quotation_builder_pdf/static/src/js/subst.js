@@ -16,9 +16,6 @@ function subst() {
         'footer': function (elt) {
             elt.style.visibility = (vars.page === vars.topage) ? "visible" : "hidden";
         },
-//        'header': function (elt) {
-//            elt.style.display = "none";
-//        },
     };
 
     for (var klass in operations) {
@@ -26,6 +23,4 @@ function subst() {
         for (var j=0; j<y.length; ++j)
             operations[klass](y[j]);
     }
-    // var x = document.getElementsByClassName("footer");
-    // x[x.length -1].style.visibility = "visible";
 }

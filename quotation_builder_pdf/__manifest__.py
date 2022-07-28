@@ -15,12 +15,16 @@
     'author': "Odoo Inc",
     'website': "http://www.odoo.com",
     'category': 'Custom Development',
-    'version': '0.1',
+    'version': '14.0.1.0.0',
     'depends': ['sale_quotation_builder', 'website', 'web_enterprise'],
     'data': [
         'data/report_paperformat.xml',
-        'views/assets.xml',
         'reports/sale_report.xml',
         'reports/layout_report.xml',
     ],
+    'assets': {
+        'web.assets_common': [
+            'quotation_builder_pdf/static/src/css/report_assets_common.css',
+        ],
+    },
 }

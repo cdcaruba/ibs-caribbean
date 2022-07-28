@@ -5,17 +5,7 @@
             <attribute name="t-if">'sale.report_saleorder' not in xmlid</attribute>
         </xpath>
     </template>
-    <template id="external_layout_clean_inherited" inherit_id="web.external_layout_clean">
-        <xpath expr="//div[contains(@t-attf-class, 'header')]" position="attributes">
-            <attribute name="t-if">'sale.report_saleorder' not in xmlid</attribute>
-        </xpath>
-    </template>
     <template id="external_layout_boxed_inherited" inherit_id="web.external_layout_boxed">
-        <xpath expr="//div[contains(@t-attf-class, 'header')]" position="attributes">
-            <attribute name="t-if">'sale.report_saleorder' not in xmlid</attribute>
-        </xpath>
-    </template>
-    <template id="external_layout_background_inherited" inherit_id="web.external_layout_background">
         <xpath expr="//div[contains(@t-attf-class, 'header')]" position="attributes">
             <attribute name="t-if">'sale.report_saleorder' not in xmlid</attribute>
         </xpath>
