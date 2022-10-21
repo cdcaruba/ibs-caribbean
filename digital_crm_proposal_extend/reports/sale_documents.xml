@@ -28,7 +28,7 @@
     <!-- Proposal template  -->
     <template id="propsal_report_document">
         <t t-if="doc.is_proposal">
-            <t t-call="digital_crm_proposal.digital_custom_layout">
+            <t t-call="digital_crm_proposal_extend.digital_custom_layout">
                 <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />    
                  <div class="row mb32">
                         <div class="col-5" >
@@ -224,49 +224,17 @@
                         </tbody>
                     </table>
 
-                    <div class="clearfix" name="so_total_summary">
-                        <div id="total" class="row" name="total">
-                            <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
-                                <table class="table table-sm">
-                                    <tr class="border-black o_subtotal" style="">
-                                        <td name="td_amount_untaxed_label"><strong>Subtotal</strong></td>
-                                        <td name="td_amount_untaxed" class="text-right">
-                                            <span t-field="doc.amount_untaxed"/>
-                                        </td>
-                                    </tr>
-                                    <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
-                                        <tr style="">
-                                            <t t-if="amount_by_group[5] == 1 and doc.amount_untaxed == amount_by_group[2]">
-                                                <td name="td_amount_by_group_label_3">
-                                                    <span t-esc="amount_by_group[0]"/>
-                                                    <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></span>
-                                                </td>
-                                                <td name="td_amount_by_group_3" class="text-right o_price_total">
-                                                    <span t-esc="amount_by_group[1]"
-                                                        t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
-                                                </td>
-                                            </t>
-                                            <t t-else ="">
-                                                <td name="td_amount_by_group_label">
-                                                    <span t-esc="amount_by_group[0]"/>
-                                                </td>
-                                                <td name="td_amount_by_group" class="text-right o_price_total">
-                                                    <span t-esc="amount_by_group[1]"
-                                                        t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
-                                                </td>
-                                            </t>
-                                        </tr>
-                                    </t>
-                                    <tr class="border-black o_total" style="border-bottom: 2px solid black;">
-                                        <td name="td_amount_total_label"><strong>Total</strong></td>
-                                        <td name="td_amount_total" class="text-right">
-                                            <span t-field="doc.amount_total"/>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+            <div class="clearfix" name="so_total_summary">
+                <div id="total" class="row" name="total">
+                    <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                        <table class="table table-sm">
+                            <!-- Tax totals -->
+                            <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)"/>
+                            <t t-call="account.document_tax_totals"/>
+                        </table>
                     </div>
+                </div>
+            </div>
 
                     <div t-if="doc.signature" class="mt32 ml64 mr4" name="signature">
                         <div class="offset-8">
@@ -301,7 +269,7 @@
     <template id="propsal_report_doc">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
-                <t t-call="digital_crm_proposal.propsal_report_document" t-lang="doc.partner_id.lang"/>
+                <t t-call="digital_crm_proposal_extend.propsal_report_document" t-lang="doc.partner_id.lang"/>
             </t>
         </t>
     </template>
@@ -322,16 +290,25 @@
     </record>
 
     <!-- Report Menu -->
-    <report 
+    <!-- <report 
             id="action_report_proposal"
             string="Proposal / Agreements"
             model="sale.order" 
             report_type="qweb-pdf"
-            file="digital_crm_proposal.propsal_report_doc" 
-            name="digital_crm_proposal.propsal_report_doc"
-            print_report_name="(object.state in ('draft', 'sent') and 'Proposal - %s' % (object.name)) or 'Adevrtising Agreement - %s' % (object.name)"
-            paperformat="digital_proposal_report_paper_format"    
-    />
+            file="digital_crm_proposal_extend.propsal_report_doc" 
+            name="digital_crm_proposal_extend.propsal_report_doc"
+    /> -->
+    <record id="action_report_proposal" model="ir.actions.report">
+        <field name="name">Proposal / Agreements</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">digital_crm_proposal_extend.propsal_report_doc</field>
+        <field name="report_file">digital_crm_proposal_extend.propsal_report_doc</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="digital_crm_proposal_extend.digital_proposal_report_paper_format" />
+    </record>
+
 
 
 </odoo>

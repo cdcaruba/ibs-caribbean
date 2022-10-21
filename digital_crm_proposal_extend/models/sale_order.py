@@ -66,20 +66,20 @@ class SaleOrder(models.Model):
 
         if force_confirmation_template or (self.state == 'sale' and not self.env.context.get('proforma', False)):
             if self.is_proposal:
-                template_id = self.env['ir.model.data'].xmlid_to_res_id('digital_crm_proposal.mail_template_sale_confirmation_degital', raise_if_not_found=False)
+                template_id = self.env['ir.model.data']._xmlid_to_res_id('digital_crm_proposal_extend.mail_template_sale_confirmation_degital', raise_if_not_found=False)
             else:
                 template_id = int(self.env['ir.config_parameter'].sudo().get_param('sale.default_confirmation_template'))
                 template_id = self.env['mail.template'].search([('id', '=', template_id)]).id
             if not template_id:
                 if self.is_proposal:
-                    template_id = self.env['ir.model.data'].xmlid_to_res_id('digital_crm_proposal.mail_template_sale_confirmation_degital', raise_if_not_found=False)
+                    template_id = self.env['ir.model.data']._xmlid_to_res_id('digital_crm_proposal_extend.mail_template_sale_confirmation_degital', raise_if_not_found=False)
                 else:
-                    template_id = self.env['ir.model.data'].xmlid_to_res_id('sale.mail_template_sale_confirmation', raise_if_not_found=False)
+                    template_id = self.env['ir.model.data']._xmlid_to_res_id('sale.mail_template_sale_confirmation', raise_if_not_found=False)
         if not template_id:
             if self.is_proposal:
-                template_id = self.env['ir.model.data'].xmlid_to_res_id('digital_crm_proposal.email_template_edi_proposal_digital', raise_if_not_found=False)
+                template_id = self.env['ir.model.data']._xmlid_to_res_id('digital_crm_proposal_extend.email_template_edi_proposal_digital', raise_if_not_found=False)
             else:
-                template_id = self.env['ir.model.data'].xmlid_to_res_id('sale.email_template_edi_sale', raise_if_not_found=False)
+                template_id = self.env['ir.model.data']._xmlid_to_res_id('sale.email_template_edi_sale', raise_if_not_found=False)
 
         return template_id
     
