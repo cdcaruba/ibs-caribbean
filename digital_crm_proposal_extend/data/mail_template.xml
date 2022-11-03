@@ -113,17 +113,17 @@
 <div style="margin: 0px; padding: 0px;">
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
         <t t-set="doc_name" t-value="'quotation' if object.state in ('draft', 'sent') else 'order'"/>
-        <t t-set="doc_name" t-value="'Proposal' if object.is_proposal"/>
+         <t t-set="doc_name" t-value="'Proposal' if object.is_proposal else 'order'"/>
 
-        Hello
-        <t t-if="object.is_proposal">
-            <span>{{object.partner_id.name}}</span>
-        </t>
-        <br/><br/>
-        Your
         
         <t t-if="object.is_proposal">
-            proposal <strong>${object.name}</strong> ( with reference ${object.name}) is ready! <br/>
+            <span> Hello {{object.partner_id.name}}</span>
+        </t>
+        <br/><br/>
+        
+        
+        <t t-if="object.is_proposal">
+           Your proposal <strong>{{object.name}}</strong> ( with reference {{object.name}}) is ready! <br/>
 We strive to be as paperless as possible and kindly request that you click the button below to review. Should everything you see in here be to your satisfaction, go ahead and proceed with the Accept and Sign. Once you have signed, you will receive an email with a pdf copy of your advertising agreement for your files. 
 That's it! (Next is when the real magic starts to happen!) <br/><br/>
 
