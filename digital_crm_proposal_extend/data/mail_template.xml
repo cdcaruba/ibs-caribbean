@@ -118,6 +118,7 @@
         Hello
         <t t-if="object.is_proposal">
             <span>{{object.partner_id.name}}</span>
+        </t>
         <br/><br/>
         Your
         
@@ -130,9 +131,9 @@ Should you have any questions, comments, or feedback please never hesitate and l
 being part of your digital signage success.<br/> <br/>
 
 <br/>
-    </p>
+        </t>
+
         <t t-else="">
-            <p style="margin: 0px; padding: 0px; font-size: 13px;">
             <t t-if="ctx.get('proforma')">
                 Pro forma invoice for <t t-out="doc_name or ''">quotation</t> <strong t-out="object.name or ''">S00052</strong>
                 <t t-if="object.origin">
@@ -150,7 +151,8 @@ being part of your digital signage success.<br/> <br/>
             <br/><br/>
             Do not hesitate to contact us if you have any questions.
             <br/>
-            </p>
+        </t>
+    </p>
 </div>
             </field>
             <field name="report_template" ref="digital_crm_proposal_extend.action_report_proposal"/>
@@ -188,9 +190,10 @@ Should there be any questions, comments, or feedback please never hesitate and l
 
 Once again, on behalf of all of us at Digital View we thank you for your business.<br/><br/>
 <br/>
-
+     </t>
 <t t-if="object.user_id and object.user_id.signature">
     {{object.user_id.signature }}
+</t>
 <t t-else="">
             Hello,
         <br/><br/>
@@ -209,7 +212,9 @@ Once again, on behalf of all of us at Digital View we thank you for your busines
         <br/><br/>
         Do not hesitate to contact us if you have any questions.
         <br/><br/>
-    </p>
+</t>
+</p>
+
 <t t-if="hasattr(object, 'website_id') and object.website_id">
     <div style="margin: 0px; padding: 0px;">
         <table width="100%" style="color: #454748; font-size: 12px; border-collapse: collapse;">
