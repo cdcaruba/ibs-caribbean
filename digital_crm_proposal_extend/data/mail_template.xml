@@ -130,7 +130,9 @@ Should you have any questions, comments, or feedback please never hesitate and l
 being part of your digital signage success.<br/> <br/>
 
 <br/>
+    </p>
         <t t-else="">
+            <p style="margin: 0px; padding: 0px; font-size: 13px;">
             <t t-if="ctx.get('proforma')">
                 Pro forma invoice for <t t-out="doc_name or ''">quotation</t> <strong t-out="object.name or ''">S00052</strong>
                 <t t-if="object.origin">
@@ -148,7 +150,7 @@ being part of your digital signage success.<br/> <br/>
             <br/><br/>
             Do not hesitate to contact us if you have any questions.
             <br/>
-    </p>
+            </p>
 </div>
             </field>
             <field name="report_template" ref="digital_crm_proposal_extend.action_report_proposal"/>
