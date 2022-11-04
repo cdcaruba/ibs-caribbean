@@ -106,26 +106,23 @@
                         <p>
                             <span>By signing this agreement, I have 
                             read and accept the 
-                            <a t-attf-href="https://dash.digitalviewmedia.com/web/content/10558?unique=318ab419e926c1c6dc8d1d93a9160891aede83ce&amp;download=true" target="_blank">
-                                        <span>Terms &amp; Conditions </span>
-                            </a>
+                            <t t-if="sale_order.company_id.attach_terms_conditions">
+                                <t t-foreach="sale_order.company_id.attach_terms_conditions" t-as="attach">
+                                    
+                                    <a t-attf-href="/web/content/#{attach.id}?download=true&amp;access_token=#{attach.generate_access_token()[0]}">
+                                        Terms &amp; Conditions
+                                    </a>
+                             </t>
+                            </t>
+                            <t t-else="">
+                            Terms &amp; Conditions
+                            </t>
                             <span>on behalf of </span><strong> <span t-field="sale_order.partner_id.name"/> </strong>                             
                             for the amount of <strong><span t-field="sale_order.amount_total"/> </strong>  
                             per month starting on <strong> <span t-field="sale_order.start_date"/> </strong> and 
                             ending on <strong> <span t-field="sale_order.end_date"/>  </strong> 
                             </span>
-                            <!--<t t-if="sale_order.company_id.attach_terms_conditions">
-                                <t t-foreach="sale_order.company_id.attach_terms_conditions" t-as="attach"> -->
-                                    
-                                    <!-- <a href="docs.google.com/document/d/1-EdBNGgURmJs79o_eyqhoAkAa_T8-LoMgj-Zf9qeXJ0/edit?usp=sharing" > -->
-                                    <!-- <a t-attf-href="/web/content/#{attach.id}?download=true&amp;access_token=#{attach.generate_access_token()}">
-                                        Terms &amp; Conditions
-                                    </a> -->
-                                <!-- </t>
-                            </t>
-                            <t t-else="">
-                            Terms &amp; Conditions
-                            </t> -->
+
                             
                         </p>
                     </t>

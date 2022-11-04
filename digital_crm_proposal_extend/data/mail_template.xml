@@ -117,13 +117,16 @@
 
         
         <t t-if="object.is_proposal">
-            <span> Hello {{object.partner_id.name}}</span>
+            <span> Hello,  </span>
         </t>
         <br/><br/>
         
         
         <t t-if="object.is_proposal">
-           Your proposal <strong>{{object.name}}</strong> ( with reference {{object.name}}) is ready! <br/>
+           Your <t t-out="doc_name or ''">Proposal</t> <strong t-out="object.name or ''"></strong>
+            <t t-if="object.origin">
+                (with reference: <t t-out="object.origin or ''">S00052</t> ) 
+            </t>is ready!<br/>
 We strive to be as paperless as possible and kindly request that you click the button below to review. Should everything you see in here be to your satisfaction, go ahead and proceed with the Accept and Sign. Once you have signed, you will receive an email with a pdf copy of your advertising agreement for your files. 
 That's it! (Next is when the real magic starts to happen!) <br/><br/>
 
