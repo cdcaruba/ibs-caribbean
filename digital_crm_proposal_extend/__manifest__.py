@@ -3,10 +3,10 @@
 
 {
     "name": "Digital View Quotation to propsal E",
-    "version": "15.0.0.0.1",
+    "version": "15.0.0.0.2",
     'sequence': 5,
     "category": "Customer Relationship Management",
-    "author": "Dinuth perera",
+    "author": "Maydragonfly",
     "license": "AGPL-3",
     "depends": ["crm","sale"],
     "data": [
