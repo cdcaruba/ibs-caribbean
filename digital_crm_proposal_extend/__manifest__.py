@@ -3,7 +3,7 @@
 
 {
     "name": "Digital View Quotation to propsal E",
-    "version": "15.0.0.0.2",
+    "version": "15.0.0.0.1",
     'sequence': 5,
     "category": "Customer Relationship Management",
     "author": "Maydragonfly",

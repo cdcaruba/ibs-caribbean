@@ -181,7 +181,7 @@ being part of your digital signage success.<br/> <br/>
         
 
         <t t-if="object.is_proposal">
-            Hello {{object.partner_id.name}}<br/><br/>
+            Hello <t t-out="object.partner_id.name"/> <br/><br/>
 
 Welcome to the Digital View family! Thank you for accepting the proposal, now let's get the ball rolling.<br/><br/>
 
@@ -195,7 +195,7 @@ Once again, on behalf of all of us at Digital View we thank you for your busines
 <br/>
      </t>
 <t t-if="object.user_id and object.user_id.signature">
-    {{object.user_id.signature }}
+    <t t-out="object.user_id.signature or ''"/>
 </t>
 <t t-else="">
             Hello,

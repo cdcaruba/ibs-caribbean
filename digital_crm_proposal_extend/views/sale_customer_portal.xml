@@ -52,17 +52,39 @@
             </div>
         </xpath>
 
-        <xpath expr="//div[@id='shipping_address']" position="replace">
+        <xpath expr="//div[hasclass('row')][3]" position="replace">
             <t t-if="sale_order.is_proposal">
-                
-            </t>
-            <t t-else="">
-                <div id="shipping_address" class="col-lg-6">
-                    <strong class="d-block mb-1">Shipping Address:</strong>
-                    <address t-field="sale_order.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                <div class="row">
+                    <div class="col-6">
+                       <address t-field="sale_order.partner_invoice_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                    </div>
                 </div>
             </t>
+            <t t-else="">
+                    <div class="col-lg-6">
+                        <strong t-if="sale_order.partner_shipping_id == sale_order.partner_invoice_id" class="d-block mb-1">Invoicing and Shipping Address:</strong>
+                        <strong t-if="sale_order.partner_shipping_id != sale_order.partner_invoice_id" class="d-block mb-1">Invoicing Address:</strong>
+                        <address t-field="sale_order.partner_invoice_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                    </div>
+                     <t t-if="sale_order.partner_shipping_id != sale_order.partner_invoice_id">
+                        <div id="shipping_address" class="col-lg-6">
+                            <strong class="d-block mb-1">Shipping Address:</strong>
+                            <address t-field="sale_order.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                        </div>
+                    </t>
+            </t>
         </xpath>
+<!--        <xpath expr="//div[@id='shipping_address']" position="replace">-->
+<!--            <t t-if="sale_order.is_proposal">-->
+<!--       (//div[hasclass('row')])[2]         -->
+<!--            </t>-->
+<!--            <t t-else="">-->
+<!--                <div id="shipping_address" class="col-lg-6">-->
+<!--                    <strong class="d-block mb-1">Shipping Address:</strong>-->
+<!--                    <address t-field="sale_order.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>-->
+<!--                </div>-->
+<!--            </t>-->
+<!--        </xpath>-->
 
         <!-- Rename Adevertising agreements  -->
         <xpath expr="//h3[@id='details']" position="replace">
