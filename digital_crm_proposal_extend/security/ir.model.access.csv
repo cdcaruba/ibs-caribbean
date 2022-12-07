@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_propsal_contions_user,access_proposal_conditions_user,model_digital_propsal_conditions,,1,1,1,1
+access_digital_recurring_period,access_digital.recurring.period_user,model_digital_recurring_period,,1,1,1,1
