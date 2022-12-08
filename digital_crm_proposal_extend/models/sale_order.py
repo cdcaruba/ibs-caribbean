@@ -94,7 +94,7 @@ class SaleOrder(models.Model):
         # if view_id:
         user_company = self.env.company
         if user_company.is_proposal:
-            reports = self.env['ir.actions.report'].search([('model','=','sale.order' )])
+            reports = self.sudo().env['ir.actions.report'].search([('model','=','sale.order' )])
             for report in reports:
                 report_name = report.name.split("/")
                 if len(report_name) >1:
@@ -103,7 +103,7 @@ class SaleOrder(models.Model):
                     elif report.name.split(" ")[0].lower().replace(" ","")=="quotation":
                         report.unlink_action()
         else:
-            reports = self.env['ir.actions.report'].search([('model','=','sale.order' )])
+            reports = self.sudo().env['ir.actions.report'].search([('model','=','sale.order' )])
             for report in reports:
                 report_name = report.name.split("/")
                 if len(report_name) >1:
