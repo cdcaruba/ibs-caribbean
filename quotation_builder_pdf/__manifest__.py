@@ -28,4 +28,7 @@
             'quotation_builder_pdf/static/src/css/report_assets_common.css',
         ],
     },
+    "cloc_exclude": {
+        "./**/*"
+    }
 }
